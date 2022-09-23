@@ -1,0 +1,14 @@
+---
+port: 8100
+interval: 30
+commands:
+  - item: test_command_1
+    command: "ls -la"
+    describe: "测试命令1"
+  - item: test_command_2
+    command: "test -e /tmp/command_test.txt"
+    # describe: "测试命令2"
+  - item: test_command_3
+    command: "ls /tmp/command_test.txt"
+    describe: "测试命令3"
+...
