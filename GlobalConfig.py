@@ -6,7 +6,7 @@
     @Desc
         prometheus 系统命令执行导出器 command-exporter
         全局配置类
-        :class GlobalConfig: 全局配置类
+            :class GlobalConfig: 全局配置类
     @Date
         2022-09-22 15:13:21
     @Ver
