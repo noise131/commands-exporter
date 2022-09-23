@@ -4,7 +4,7 @@
     @Author
         noise131
     @Desc
-        prometheus 系统命令执行 exporter
+        prometheus 系统命令执行导出器 command-exporter
         工具类
             :class YamlHandle: yaml 配置读取工具类
             :class MetricItem: 命令执行及指标更新工具类

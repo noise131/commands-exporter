@@ -4,7 +4,7 @@
     @Author
         noise131
     @Desc
-        prometheus 系统命令执行 exporter
+        prometheus 系统命令执行导出器 command-exporter
         主程序
             执行系统命令, 将返回值作为指标导出
             :metrics: "commands_exec_status"

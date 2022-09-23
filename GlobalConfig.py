@@ -4,7 +4,7 @@
     @Author
         noise131
     @Desc
-        prometheus 系统命令执行 exporter
+        prometheus 系统命令执行导出器 command-exporter
         全局配置类
         :class GlobalConfig: 全局配置类
     @Date
