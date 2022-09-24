@@ -12,7 +12,7 @@
             :label command: 指标执行的系统命令
             :label describe: 指定命令指标的描述
     @Date
-        2022-09-22 15:09:32
+        2022-09-12 15:09:32
     @Ver
         v1.0
     @PyVer
