@@ -24,7 +24,8 @@ class GlobalConfig():
     yaml_config_path: str = './commands.yaml'
     metrics_name = 'commands_exec_status'
     metric_describe = '命令执行指标'
-
+    default_port = 8100
+    default_interval = 30
 logger = logging.getLogger('logger')
 logger.setLevel(logging.DEBUG)
 log_sh = logging.StreamHandler()

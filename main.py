@@ -39,11 +39,11 @@ if __name__ == '__main__':
     yaml_config = YamlHandle(GlobalConfig.yaml_config_path)
     port = yaml_config.get_content[0].get('port')
     if not port:
-        port = 8100
+        port = GlobalConfig.default_port
     port = str_to_int(port, '获取端口号出现异常')
     interval = yaml_config.get_content[0].get('interval')
     if not interval:
-        interval = 30
+        interval = GlobalConfig.default_interval
     interval = str_to_int(interval, '获取间隔时间出现异常')
     start_http_server(port)
     metrics_gauge = Gauge(GlobalConfig.metrics_name, GlobalConfig.metric_describe, ['item', 'command', 'describe'])
