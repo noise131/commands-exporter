@@ -21,7 +21,7 @@ import logging
 
 
 class GlobalConfig():
-    yaml_config_path: str = './commands.yaml'
+    yaml_config_path: str = 'commands.yaml'
     metrics_name = 'commands_exec_status'
     metric_describe = '命令执行指标'
     default_port = 8100
