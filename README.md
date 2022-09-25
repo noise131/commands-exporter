@@ -64,6 +64,53 @@ ruamel.yaml.clib  0.2.6
 
 > 二进制执行之前删除了 `/tmp/command_test.txt` 文件
 
+## 注册为 systemd 服务进行管理
+
+项目中附带了 systemd service 文件 : `support-files/systemd-unit/commands-exporter.service` 将其复制到 `/usr/lib/systemd/system/` 中即可
+
+```shell
+]# cp /usr/local/commands-exporter_linux-amd64/support-files/systemd-unit/commands-exporter.service /usr/lib/systemd/system/
+
+]# systemctl daemon-reload
+
+]# systemctl start commands-exporter.service 
+]# systemctl status commands-exporter.service 
+● commands-exporter.service - Commands Exporter
+   Loaded: loaded (/usr/lib/systemd/system/commands-exporter.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sun 2022-09-25 15:57:01 CST; 6s ago
+     Docs: https://github.com/noise131/commands-exporter
+ Main PID: 36240 (commands-export)
+    Tasks: 3 (limit: 4722)
+   Memory: 56.3M
+   CGroup: /system.slice/commands-exporter.service
+           ├─36240 /usr/local/commands-exporter_linux-amd64/commands-exporter
+           └─36241 /usr/local/commands-exporter_linux-amd64/commands-exporter
+```
+
+查看导出器的端口
+
+```shell
+]# netstat -tlnp |grep 8100
+tcp        0      0 0.0.0.0:8100            0.0.0.0:*               LISTEN      36241/commands-expo
+```
+
+查看导出器的 web 数据
+
+```shell
+]# curl -s 172.5.1.11:8100
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 463.0
+python_gc_objects_collected_total{generation="1"} 7.0
+python_gc_objects_collected_total{generation="2"} 0.0
+......
+# HELP commands_exec_status 命令执行指标
+# TYPE commands_exec_status gauge
+commands_exec_status{command="test -e /tmp/command_test.txt",describe="This metrics is not describe.",item="test_command_2"} 1.0
+commands_exec_status{command="ls /tmp/command_test.txt",describe="测试命令3",item="test_command_3"} 2.0
+commands_exec_status{command="ls -la",describe="测试命令1",item="test_command_1"} 0.0
+```
+
 # 配置文件
 
 配置文件默认读取位置 : 主程序所在目录中的 commands.yaml
@@ -94,4 +141,26 @@ commands:
 > - `item` : 项目名，会作为标签出现在指标中。必须
 > - `command` : 要执行的命令，会作为标签出现在指标中。必须
 > - `describe` : 执行命令的项目描述，会作为标签出现在指标中。default : 无描述
->
+
+# prometheus 配置
+
+```shell
+]# cat prometheus.yml
+scrape_configs:
+......
+  - job_name: "commands"
+    # metrics_path: /   ## 指定指标暴露的 url, 使用任意 url 都可以获取到指标
+    # file_sd_configs:
+    #   - files:
+    #   - /etc/prometheus/file_sd/commands.yaml
+    static_configs:
+      - targets:
+        - 172.5.1.75:8100
+        - 172.5.1.11:8100
+    metric_relabel_configs:
+      # 删除无用指标
+      - source_labels:
+        - __name__
+        regex: "python.*|process.*"
+        action: drop
+```
