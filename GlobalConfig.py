@@ -26,8 +26,10 @@ class GlobalConfig():
     metric_describe = '命令执行指标'
     default_port = 8100
     default_interval = 30
+    default_log_level = logging.INFO
+
 logger = logging.getLogger('logger')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(GlobalConfig.default_log_level)
 log_sh = logging.StreamHandler()
 logger.addHandler(log_sh)
 log_format = logging.Formatter(fmt=r'%(asctime)s - [%(levelname)s] - %(name)s - %(process)s - %(thread)s - %(funcName)s - %(message)s')

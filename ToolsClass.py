@@ -58,7 +58,7 @@ class MetricItem():
             logger.error('命令执行返回值不为 0, item: {}, command: {}, return: {}, describe: {}, stdout: {}, stderr: {}'.
                 format(self.item, self.command, r.returncode, self.describe, r.stdout.readlines(), r.stderr.readlines()))
             return
-        logger.info('命令执行成功, item: {}, command: {}, describe: {}'.
+        logger.debug('命令执行成功, item: {}, command: {}, describe: {}'.
                         format(self.item, self.command, self.describe))
 
     def update_metrics(self, return_value) -> None:
