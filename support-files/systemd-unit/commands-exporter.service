@@ -1,0 +1,10 @@
+[Unit]
+Description=Commands Exporter
+Documentation=https://github.com/noise131/commands-exporter
+
+[Service]
+ExecStart=/usr/local/commands-exporter_linux-amd64/commands-exporter
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
