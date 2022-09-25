@@ -32,8 +32,9 @@ from prometheus_client import start_http_server, Gauge
 
 
 logger = logging.getLogger('logger.main')
-os.chdir(os.path.dirname(sys.argv[0]))
-
+if os.path.dirname(sys.argv[0]):
+    os.chdir(os.path.dirname(sys.argv[0]))
+logger.info('程序工作目录 : {}'.format(os.getcwd()))
 
 if __name__ == '__main__':
     yaml_config = YamlHandle(GlobalConfig.yaml_config_path)
